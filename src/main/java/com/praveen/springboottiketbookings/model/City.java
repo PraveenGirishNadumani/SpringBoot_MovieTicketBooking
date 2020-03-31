@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
 //import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -21,12 +22,13 @@ public class City {
 	private long C_id;
 	
 	@Column(nullable=false)
+	@NotBlank
 	private String C_name;
 	
-	@Column(unique=true,nullable=false)
+	@NotBlank
 	private String C_pincode;
 	
-	@Column(nullable=false)
+	@NotBlank
 	private String C_state;
 
 	public long getID() {

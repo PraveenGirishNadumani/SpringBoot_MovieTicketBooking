@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -20,10 +21,10 @@ public class Theater {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long T_id;
 	
-	@Column(nullable=false)
+	@NotBlank
 	private String T_name;
 	
-	@Column(nullable=false)
+	@NotBlank
 	private String T_area;
 
 	public long getT_id() {
