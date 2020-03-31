@@ -1,6 +1,5 @@
 package com.praveen.springboottiketbookings.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
