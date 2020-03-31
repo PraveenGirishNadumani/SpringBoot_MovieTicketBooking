@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.praveen.springboottiketbookings.DAO.CityDAO;
+import com.praveen.springboottiketbookings.DAO.MovieDAO;
 import com.praveen.springboottiketbookings.model.City;
+import com.praveen.springboottiketbookings.model.Movie;
 
 @RestController
 @RequestMapping("/api")
@@ -25,9 +27,9 @@ public class TicketBookingController {
 	@Autowired
 	CityDAO theCityDAO;
 	
-//	@Autowired
-//	MovieDAO theMovieDAO;
-//	
+	@Autowired
+	MovieDAO theMovieDAO;
+	
 //	@Autowired
 //	TheaterDAO theTheaterDAO;
 //	
@@ -47,16 +49,28 @@ public class TicketBookingController {
 		return theCityDAO.save(c);
 	}
 	
+//	Add Movie to the table
+	@PostMapping("/movie")
+	public Movie createMovie(@Valid @RequestBody Movie m) {
+		return theMovieDAO.save(m);
+	}
+	
 //	get all City
 	@GetMapping("/city")
 	public List<City> getCity(){
 		return theCityDAO.getCity(); 
 	}
 	
+//	Get all Movie
+	@GetMapping("/movie")
+	public List<Movie> getMovie(){
+		return theMovieDAO.getMovie();
+	}
+	
 //	get City by particular ID
 	
 	@GetMapping("/city/{ID}")
-	public ResponseEntity<City> getOne(@PathVariable(value="ID") long ID){
+	public ResponseEntity<City> getOneCity(@PathVariable(value="ID") long ID){
 		City theCity = theCityDAO.findOne(ID);
 		if(theCity == null) {
 			 return ResponseEntity.notFound().build();
@@ -65,9 +79,20 @@ public class TicketBookingController {
 	
 	}
 	
+//	Get movie by ID
+	
+	@GetMapping("/movie/{ID}")
+	public ResponseEntity<Movie> getOneMovie(@PathVariable(value="ID") long ID){
+		Movie theMovie = theMovieDAO.findOne(ID);
+		if(theMovie == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(theMovie);
+	}
+	
 //	?update the City 
 	@PutMapping("/city/{ID}")
-	public ResponseEntity<City> update(@PathVariable(value="ID") long ID, @Valid @RequestBody City c){
+	public ResponseEntity<City> updateCity(@PathVariable(value="ID") long ID, @Valid @RequestBody City c){
 		
 		City theCity = theCityDAO.findOne(ID);
 		
@@ -84,6 +109,21 @@ public class TicketBookingController {
 		
 	}
 	
+//	update Movie
+	@PutMapping("/movie/:ID")
+	public ResponseEntity<Movie> updateMovie(@PathVariable(value="ID") long ID,@Valid @RequestBody Movie m){
+		Movie theMovie = theMovieDAO.findOne(ID);
+		if(theMovie == null) {
+			return ResponseEntity.notFound().build();
+		}
+		theMovie.setM_name(m.getM_name());
+		theMovie.setM_director(m.getM_director());
+		theMovie.setM_description(m.getM_description());
+		
+		Movie updatedMovie = theMovieDAO.save(theMovie);
+		return ResponseEntity.ok().body(updatedMovie);
+	}
+	
 	
 //	Delete City Data
 	@DeleteMapping("/city/{ID}")
@@ -97,6 +137,17 @@ public class TicketBookingController {
 		theCityDAO.deletecity(theCity);
 		
 		return ResponseEntity.ok().build(); 
+	}
+	
+//	Delete a Movie
+	@DeleteMapping("/movie")
+	public ResponseEntity<Movie> deleteMovie(@PathVariable(value= "ID") long ID){
+		Movie theMovie = theMovieDAO.findOne(ID);
+		if(theMovie == null) {
+			return ResponseEntity.notFound().build();
+		}
+		theMovieDAO.deleteMovie(theMovie);
+		return ResponseEntity.ok().build();
 	}
 	
 	

@@ -27,8 +27,8 @@ public class MovieDAO {
 	}
 	
 //	Fetch movie by ID
-	public Optional<Movie> findOne(long ID){
-		return theMoviewRepository.findById(ID);
+	public Movie findOne(long ID){
+		return theMoviewRepository.getOne(ID);
 	}
 	
 //	Delete Movie
