@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.praveen.springboottiketbookings.DAO.CityDAO;
 import com.praveen.springboottiketbookings.DAO.MovieDAO;
+import com.praveen.springboottiketbookings.DAO.TheaterDAO;
 import com.praveen.springboottiketbookings.model.City;
 import com.praveen.springboottiketbookings.model.Movie;
+import com.praveen.springboottiketbookings.model.Theater;
 
 @RestController
 @RequestMapping("/api")
@@ -30,9 +32,9 @@ public class TicketBookingController {
 	@Autowired
 	MovieDAO theMovieDAO;
 	
-//	@Autowired
-//	TheaterDAO theTheaterDAO;
-//	
+	@Autowired
+	TheaterDAO theTheaterDAO;
+	
 //	@Autowired
 //	TheaterMovieDAO theTheaterMovieDAO;
 	
@@ -56,6 +58,12 @@ public class TicketBookingController {
 		return theMovieDAO.save(m);
 	}
 	
+//	Add Theater to the table
+	@PostMapping("/theater")
+	public Theater createTheater(@Valid @RequestBody Theater t) {
+		return theTheaterDAO.save(t);
+	}
+	
 //	get all City
 	@GetMapping("/city")
 	public List<City> getCity(){
@@ -67,6 +75,15 @@ public class TicketBookingController {
 	public List<Movie> getMovie(){
 		return theMovieDAO.getMovie();
 	}
+	
+//	Get all the Theaters
+	@GetMapping("/theater")
+	public List<Theater> getTheater(){
+		return theTheaterDAO.getTheater();
+	}
+	
+	
+	
 	
 //	get City by particular ID
 	
@@ -80,7 +97,7 @@ public class TicketBookingController {
 	
 	}
 	
-//	Get movie by ID
+//	Get movie by particular ID
 	
 	@GetMapping("/movie/{ID}")
 	public ResponseEntity<Movie> getOneMovie(@PathVariable(value="ID") long ID){
@@ -91,7 +108,21 @@ public class TicketBookingController {
 		return ResponseEntity.ok().body(theMovie);
 	}
 	
-//	?update the City 
+//	Get Theater By particular ID
+	@GetMapping("/theater/{ID")
+	public ResponseEntity<Theater> getOneTheater(@PathVariable(value="ID") long ID){
+		Theater theTheater = theTheaterDAO.findOne(ID);
+		if(theTheater == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok().body(theTheater);
+	}
+	
+	
+	
+	
+	
+//	Update the City 
 	@PutMapping("/city/{ID}")
 	public ResponseEntity<City> updateCity(@PathVariable(value="ID") long ID, @Valid @RequestBody City c){
 		
@@ -125,6 +156,25 @@ public class TicketBookingController {
 		return ResponseEntity.ok().body(updatedMovie);
 	}
 	
+//	update theater
+	@PutMapping("/theater/:ID")
+	public ResponseEntity<Theater> updatetheater(@PathVariable(value="ID") long ID, @Valid @RequestBody Theater t){
+		
+		Theater theTheater = theTheaterDAO.findOne(ID);
+		if(theTheater == null) {
+			return ResponseEntity.notFound().build();
+		}
+		theTheater.setT_name(t.getT_name());
+		theTheater.setT_area(t.getT_area());
+		
+		Theater updatedTheater = theTheaterDAO.save(theTheater);
+		return ResponseEntity.ok().body(updatedTheater);
+		
+	}
+	
+	
+	
+	
 	
 //	Delete City Data
 	@DeleteMapping("/city/{ID}")
@@ -148,6 +198,17 @@ public class TicketBookingController {
 			return ResponseEntity.notFound().build();
 		}
 		theMovieDAO.deleteMovie(theMovie);
+		return ResponseEntity.ok().build();
+	}
+	
+//   Delete a Movie
+	@DeleteMapping("/theater")
+	public ResponseEntity<Theater> deleteTheater(@PathVariable(value = "ID") long ID){
+		Theater theTheater = theTheaterDAO.findOne(ID);
+		if(theTheater == null) {
+			return ResponseEntity.notFound().build();
+		}
+		theTheaterDAO.deleteTheater(theTheater);
 		return ResponseEntity.ok().build();
 	}
 	

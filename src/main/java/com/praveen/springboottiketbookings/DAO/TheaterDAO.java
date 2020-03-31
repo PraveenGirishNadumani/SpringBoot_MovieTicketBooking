@@ -1,7 +1,6 @@
 package com.praveen.springboottiketbookings.DAO;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +26,9 @@ public class TheaterDAO {
 	
 //	get Theater by ID
 	
-	public Optional<Theater> findOne(long ID){
+	public Theater findOne(long ID){
 		
-		return theTheaterRepository.findById(ID);
+		return theTheaterRepository.getOne(ID);
 		
 	}
 	
