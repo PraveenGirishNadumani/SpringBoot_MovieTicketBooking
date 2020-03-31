@@ -1,5 +1,6 @@
 package com.praveen.springboottiketbookings.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -59,9 +60,15 @@ public class TicketBookingController {
 	}
 	
 //	Add Theater to the table
-	@PostMapping("/theater")
-	public Theater createTheater(@Valid @RequestBody Theater t) {
-		return theTheaterDAO.save(t);
+	@PostMapping("/theater/{city}")
+	public Theater createTheater(@PathVariable(value="city") long city, @Valid @RequestBody HashMap<String, String> requestData) {
+//		return theTheaterDAO.save(t);
+		Theater theTheater = new Theater();
+		theTheater.setT_name(requestData.get("name"));
+		theTheater.setT_area(requestData.get("area"));
+		City theCity = theCityDAO.findOne(city);
+		theTheater.setCity(theCity);
+		return theTheaterDAO.save(theTheater);
 	}
 	
 //	get all City

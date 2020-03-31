@@ -1,15 +1,20 @@
 package com.praveen.springboottiketbookings.model;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tableTheater")
@@ -26,6 +31,19 @@ public class Theater {
 	
 	@NotBlank
 	private String T_area;
+	
+	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private City city;
+
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
 
 	public long getT_id() {
 		return T_id;
