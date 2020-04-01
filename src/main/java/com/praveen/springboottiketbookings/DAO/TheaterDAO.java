@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.praveen.springboottiketbookings.model.City;
 import com.praveen.springboottiketbookings.model.Theater;
 import com.praveen.springboottiketbookings.respository.TheaterRepository;
 
@@ -36,6 +37,12 @@ public class TheaterDAO {
 	public void deleteTheater(Theater t) {
 		theTheaterRepository.delete(t);
 	}
+	
+//	Find theater by city ID
+	public List<Theater> gettheaterByCityId(City c){
+		return theTheaterRepository.findByCity(c);
+	}
+	
 	
 	
 

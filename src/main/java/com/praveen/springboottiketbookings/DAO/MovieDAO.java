@@ -35,4 +35,9 @@ public class MovieDAO {
 		theMoviewRepository.delete(m);
 	}
 	
+//	get Movie list by theater ID
+	public List<Object[]> getMovieByTheaterId(long ID){
+		return theMoviewRepository.getMovieByTheateID(ID);
+	}
+	
 }

@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.praveen.springboottiketbookings.DAO.CityDAO;
 import com.praveen.springboottiketbookings.DAO.MovieDAO;
+import com.praveen.springboottiketbookings.DAO.ShowDAO;
 import com.praveen.springboottiketbookings.DAO.TheaterDAO;
 import com.praveen.springboottiketbookings.model.City;
 import com.praveen.springboottiketbookings.model.Movie;
+import com.praveen.springboottiketbookings.model.Show;
 import com.praveen.springboottiketbookings.model.Theater;
 
 @RestController
@@ -35,6 +37,9 @@ public class TicketBookingController {
 	
 	@Autowired
 	TheaterDAO theTheaterDAO;
+	
+	@Autowired
+	ShowDAO theShowDAO;
 	
 //	@Autowired
 //	TheaterMovieDAO theTheaterMovieDAO;
@@ -60,7 +65,7 @@ public class TicketBookingController {
 	}
 	
 //	Add Theater to the table
-	@PostMapping("/theater/{city}")
+	@PostMapping("/{city}/theater")
 	public Theater createTheater(@PathVariable(value="city") long city, @Valid @RequestBody HashMap<String, String> requestData) {
 //		return theTheaterDAO.save(t);
 		Theater theTheater = new Theater();
@@ -69,6 +74,18 @@ public class TicketBookingController {
 		City theCity = theCityDAO.findOne(city);
 		theTheater.setCity(theCity);
 		return theTheaterDAO.save(theTheater);
+	}
+	
+//	adding show for a theater and movie
+	@PostMapping("/{ID}/{id}/show")
+	public Show addingShow(@PathVariable(value = "ID") long ID, @PathVariable(value = "id") long id, @Valid @RequestBody HashMap<String, String> requestData) {
+		Theater theTheater = theTheaterDAO.findOne(ID);
+		Movie theMovie = theMovieDAO.findOne(id);
+		Show theShow = new Show();
+		theShow.setShow_time(requestData.get("time"));
+		theShow.setTheMovie(theMovie);
+		theShow.setTheTheater(theTheater);
+		return theShowDAO.save(theShow);
 	}
 	
 //	get all City
@@ -208,7 +225,7 @@ public class TicketBookingController {
 		return ResponseEntity.ok().build();
 	}
 	
-//   Delete a Movie
+//   Delete a theater
 	@DeleteMapping("/theater/{ID}")
 	public ResponseEntity<Theater> deleteTheater(@PathVariable(value = "ID") long ID){
 		Theater theTheater = theTheaterDAO.findOne(ID);
