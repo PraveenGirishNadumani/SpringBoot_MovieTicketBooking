@@ -1,10 +1,13 @@
 package com.praveen.springboottiketbookings.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -27,6 +30,9 @@ public class Movie {
 	
 	
 	private String M_description;
+	
+	@OneToMany(mappedBy = "theMovie")
+	public List<Show> theShow;
 
 	public long get_id() {
 		return M_id;

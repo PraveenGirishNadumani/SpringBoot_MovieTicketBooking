@@ -1,7 +1,6 @@
 package com.praveen.springboottiketbookings.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,10 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -41,19 +38,24 @@ public class Theater {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private City city;
 	
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(
-			name = "theater_movie",
-			joinColumns = {
-					@JoinColumn(name = "T_id")
-			},
-			inverseJoinColumns = {
-					@JoinColumn(name = "M_id")
-			}
-	)
-	Set <Movie> movies = new HashSet	< Movie > (); 
+	/*First version of creating many to one relationship between theater and movie entity*/
+//	@ManyToMany(cascade = {CascadeType.ALL})
+//	@JoinTable(
+//			name = "theater_movie",
+//			joinColumns = {
+//					@JoinColumn(name = "T_id")
+//			},
+//			inverseJoinColumns = {
+//					@JoinColumn(name = "M_id")
+//			}
+//	)
+//	Set <Movie> movies = new HashSet	< Movie > (); 
+//	
 	
-
+	@OneToMany(mappedBy = "theTheater")
+	private List<Show> theShow;
+	
+	
 
 	public City getCity() {
 		return city;
