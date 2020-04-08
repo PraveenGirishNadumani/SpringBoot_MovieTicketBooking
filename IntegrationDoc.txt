@@ -1,0 +1,241 @@
+
+*All the Admin or merchant api endpoint starts with the /api *
+
+*To add the City to the DB*
+URL: /api/city
+Method: POST 
+Request:
+{
+	"name":"Bengaluru", 
+	"pincode":"590056",
+	"state":"Karnataka"
+}
+Response:
+{
+    "name": "Bengaluru",
+    "state": "Karnataka",
+    "id": 2,
+    "pincode": "590056"
+}
+
+*To add theater to the BD *
+here theater reference to the key_id of the city as primary key so make sure to pass the valid city id 
+URL: /api/{CityID}/theater
+Method: POST
+Request: 
+{
+	"name":"Finox mall",
+	"area":"Koramangala"	
+}
+Response:
+{
+    "t_name": "Finox",
+    "t_area": "Kormangala",
+    "t_id": 3
+}
+
+*To add the Movie to the DB *
+URL: /api/movie
+Method: POST
+Request Body:
+{
+	"_name":"WAR 3",
+	"_director":"WAR 3 directors",
+	"_description":"description about the WAR 3 movie here"
+}
+Response Body:
+{
+    "_name": "WAR 3",
+    "_director": "WAR 3 directors",
+    "_description": "description about the WAR 3 movie here",
+    "_id": 6
+}
+
+
+* TO add a show pass the theater Id and Movie id as a URL parma and the show time in the request body *
+URL: /api/{theater_id}/{movie_id}/show
+Method: POST
+Request:
+{
+	"time":"4/4/2020 - 3:30 PM"
+}
+Response:
+{
+    "show_Id": 8,
+    "show_time": "1/4/2020 - 3:30 PM "
+}
+
+
+*All the End user api will start with the /user *
+
+When user comes to the app make a get call to below API to fetch the name of city available on the app 
+
+URL: /user/city
+Method: GET 
+Response Body:
+[
+    {
+        "name": "Munavalli",
+        "state": "Karnataka",
+        "id": 1,
+        "pincode": "591117"
+    },
+    {
+        "name": "Bengaluru",
+        "state": "Karnataka",
+        "id": 2,
+        "pincode": "590056"
+    }
+]
+
+To get the list of Theaters Available on the city using the city id got in the previous call
+
+URL: /user/{cityID}/theater
+Method: GET
+Response Body:
+[
+    {
+        "t_name": "Finox",
+        "t_area": "Kormangala",
+        "t_id": 3
+    },
+    {
+        "t_name": "Bhoda theater",
+        "t_area": "Kengeri",
+        "t_id": 5
+    }
+]
+
+* after user selects the theater pass the theater id to the below api and in return you'll get a list of movie available for the movie *
+
+URL: /user/theater/{theaterID}/movie
+Method: GET
+Response Body:
+[
+    [
+        6,
+        "WAR 3",
+        "description about the WAR 3 movie here"
+    ]
+]
+
+* Get a list of show available agist a Movie using the movie ID got in the previous step
+
+URL: /user/movie/{id}/show
+Method: GET
+Response Body:
+
+    {
+        "show_Id": 12,
+        "show_time": "4/4/2020 - 09:00 AM"
+    },
+    {
+        "show_Id": 21,
+        "show_time": "4/4/2020 - 9:00 PM"
+    },
+    {
+        "show_Id": 22,
+        "show_time": "4/4/2020 - 9:00 PM"
+    },
+    {
+        "show_Id": 33,
+        "show_time": "4/4/2020 - 6:00 PM"
+    },
+    {
+        "show_Id": 34,
+        "show_time": "4/4/2020 - 6:00 PM"
+    },
+    {
+        "show_Id": 35,
+        "show_time": "4/4/2020 - 6:00 PM"
+    },
+    {
+        "show_Id": 36,
+        "show_time": "4/4/2020 - 6:00 PM"
+    }
+]
+
+
+* Pass the show id to the below API to get the available seat for the movie/show 
+
+URL: /user/show/{ID}
+Method: GET
+Response Body:
+{
+    "show_id": 35,
+    "a4": 0,
+    "a5": 0,
+    "b1": 0,
+    "a1": 0,
+    "a2": 0,
+    "a3": 0,
+    "b2": 0,
+    "b3": 0,
+    "b4": 0,
+    "b5": 0,
+    "c1": 0,
+    "c2": 0,
+    "c3": 0,
+    "c4": 0,
+    "c5": 0,
+    "hibernateLazyInitializer": {}
+}
+
+* Book a ticket for the show using the available seat for the response got in previous API call.
+
+URL: /user/show/{ID}/bookings
+Method: POST
+Request body:
+{
+    "show_id": 35,
+    "a4": 1,
+    "a5": 0,
+    "b1": 1,
+    "a1": 0,
+    "a2": 0,
+    "a3": 0,
+    "b2": 0,
+    "b3": 0,
+    "b4": 0,
+    "b5": 0,
+    "c1": 0,
+    "c2": 0,
+    "c3": 0,
+    "c4": 0,
+    "c5": 0
+}
+
+Response Body:
+{
+    "show_id": 35,
+    "a4": 1,
+    "a5": 0,
+    "b1": 1,
+    "a1": 0,
+    "a2": 0,
+    "a3": 0,
+    "b2": 0,
+    "b3": 0,
+    "b4": 0,
+    "b5": 0,
+    "c1": 0,
+    "c2": 0,
+    "c3": 0,
+    "c4": 0,
+    "c5": 0
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

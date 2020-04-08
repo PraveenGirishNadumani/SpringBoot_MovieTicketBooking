@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.praveen.springboottiketbookings.DAO.BookingsDAO;
 import com.praveen.springboottiketbookings.DAO.CityDAO;
 import com.praveen.springboottiketbookings.DAO.MovieDAO;
 import com.praveen.springboottiketbookings.DAO.ShowDAO;
 import com.praveen.springboottiketbookings.DAO.TheaterDAO;
+import com.praveen.springboottiketbookings.model.Bookings;
 import com.praveen.springboottiketbookings.model.City;
 import com.praveen.springboottiketbookings.model.Movie;
 import com.praveen.springboottiketbookings.model.Show;
@@ -40,6 +42,9 @@ public class TicketBookingController {
 	
 	@Autowired
 	ShowDAO theShowDAO;
+	
+	@Autowired
+	BookingsDAO theBookingsDAO;
 	
 //	@Autowired
 //	TheaterMovieDAO theTheaterMovieDAO;
@@ -82,10 +87,15 @@ public class TicketBookingController {
 		Theater theTheater = theTheaterDAO.findOne(ID);
 		Movie theMovie = theMovieDAO.findOne(id);
 		Show theShow = new Show();
+		Show theResponseShow = new Show();
+		Bookings theBookings = new Bookings();
 		theShow.setShow_time(requestData.get("time"));
 		theShow.setTheMovie(theMovie);
 		theShow.setTheTheater(theTheater);
-		return theShowDAO.save(theShow);
+		theResponseShow = theShowDAO.save(theShow);
+		theBookings.setShow_id(theResponseShow.getShow_Id());
+		theBookingsDAO.bookTheSeat(theBookings);
+		return theResponseShow;
 	}
 	
 //	get all City

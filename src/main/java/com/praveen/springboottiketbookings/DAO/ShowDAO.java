@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.praveen.springboottiketbookings.model.Movie;
 import com.praveen.springboottiketbookings.model.Show;
 import com.praveen.springboottiketbookings.respository.ShowRepository;
 
@@ -31,4 +32,9 @@ public class ShowDAO {
 		return theShowRepository.getOne(Id);
 	}
 	
+//	Fetch show by Moive ID
+	
+	public List<Show> fetchByMovie(Movie m){
+		return theShowRepository.findBytheMovie(m);
+	}
 }
