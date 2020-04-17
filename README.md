@@ -1,13 +1,13 @@
 # MovieTicketBooking
 This is the movie ticket booking REST API project. we used Spring boot for API implementation and Hibernate for Database connectivity.
 
-#Below are the list of API endpoints available for the user to make api integrations for there platform 
+## Below are the list of API endpoints available for the user to make api integrations for there platform 
 
 
 
-*All the Admin or merchant api endpoint starts with the /api *
+### All the Admin or merchant api endpoint starts with the /api *
 
-*To add the City to the DB*
+### To add the City to the DB
 URL: /api/city
 Method: POST 
 Request:
@@ -24,7 +24,7 @@ Response:
     "pincode": "590056"
 }
 
-*To add theater to the BD *
+### To add theater to the BD 
 here theater reference to the key_id of the city as primary key so make sure to pass the valid city id 
 URL: /api/{CityID}/theater
 Method: POST
@@ -40,7 +40,7 @@ Response:
     "t_id": 3
 }
 
-*To add the Movie to the DB *
+### To add the Movie to the DB 
 URL: /api/movie
 Method: POST
 Request Body:
@@ -57,7 +57,7 @@ Response Body:
     "_id": 6
 }
 
-*To add a show *
+### To add a show 
 
 URL: 
 
@@ -75,7 +75,7 @@ Response:
 }
 
 
-*All the End user api will start with the /user *
+### All the End user api will start with the /user 
 
 When user comes to the app make a get call to below API to fetch the name of city available on the app 
 
@@ -115,7 +115,7 @@ Response Body:
     }
 ]
 
-* after user selects the theater pass the theater id to the below api and in return you'll get a list of movie available for the movie *
+### after user selects the theater pass the theater id to the below api and in return you'll get a list of movie available for the movie *
 
 URL: /user/theater/{theaterID}/movie
 Method: GET
